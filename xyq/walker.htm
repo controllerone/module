@@ -52,10 +52,10 @@
         var Walker = Class.create();
         Walker.prototype = {
             init: function(_src, _walkerSize, initPos) {
-                //ÈËÎï³¯Ïò£¬ÖµÓëÈËÎïÍ¼Æ¬µÄĞĞÊıÒª¶ÔÓ¦¡£Æ©ÈçËµÍ¼Æ¬µÚ1ĞĞÊÇ³¯ÏòSouthWestµÄ£¬Ôòthis.direction.SouthWestÖµÎª1
+                //äººç‰©æœå‘ï¼Œå€¼ä¸äººç‰©å›¾ç‰‡çš„è¡Œæ•°è¦å¯¹åº”ã€‚è­¬å¦‚è¯´å›¾ç‰‡ç¬¬1è¡Œæ˜¯æœå‘SouthWestçš„ï¼Œåˆ™this.direction.SouthWestå€¼ä¸º1
                 this.direction = { SouthEast: 0, SouthWest: 1, NorthEast: 2, NorthWest: 3 };
-                this.currentDirection = this.direction.SouthEast; //µ±Ç°ÈËÎï³¯Ïò
-                this.speed = 0.5; //Ä¬ÈÏËÙ¶È£ºÃ¿´ÎÒÆ¶¯0.5px Í¨¹ı´ËºÍÆğµãÖÕµã¾àÀëËã³öÒÆ¶¯×Ü´ÎÊı£¨×ÜÖ¡Êı£©
+                this.currentDirection = this.direction.SouthEast; //å½“å‰äººç‰©æœå‘
+                this.speed = 0.5; //é»˜è®¤é€Ÿåº¦ï¼šæ¯æ¬¡ç§»åŠ¨0.5px é€šè¿‡æ­¤å’Œèµ·ç‚¹ç»ˆç‚¹è·ç¦»ç®—å‡ºç§»åŠ¨æ€»æ¬¡æ•°ï¼ˆæ€»å¸§æ•°ï¼‰
                 this.walkFlag = this.moveFlag = null;
                 this.walkerSize = _walkerSize;
                 this.walker = document.createElement("div");
@@ -70,7 +70,7 @@
                 this.walker.style.left = initPos.x + "px";
                 this.walker.style.top = initPos.y + "px";
             },
-            setWalkStatus: function(row, col) {//col=0ÉèÖÃÎª¸Ã·½ÏòµÄ³õÊ¼×´Ì¬¡£rowÖµÓë·½ÏòdirectionÒ»ÖÂ
+            setWalkStatus: function(row, col) {//col=0è®¾ç½®ä¸ºè¯¥æ–¹å‘çš„åˆå§‹çŠ¶æ€ã€‚rowå€¼ä¸æ–¹å‘directionä¸€è‡´
                 this.img.style.left = -col * this.walkerSize.w + "px";
                 this.img.style.top = -row * this.walkerSize.h + "px";
             },
@@ -78,19 +78,19 @@
                 var dir = 0;
                 var initPos = Common.getElementPos(this.walker);
                 initPos.x = initPos.x + this.walkerSize.w / 2, initPos.y = initPos.y + this.walkerSize.h / 2;
-                if (mousePos.y < initPos.y) {//ÉÏ·½
-                    if (mousePos.x > initPos.x) { //¶«±±
+                if (mousePos.y < initPos.y) {//ä¸Šæ–¹
+                    if (mousePos.x > initPos.x) { //ä¸œåŒ—
                         dir = this.direction.NorthEast;
                     }
-                    else { //Î÷±±
+                    else { //è¥¿åŒ—
                         dir = this.direction.NorthWest;
                     }
                 }
-                else { //ÏÂ·½
-                    if (mousePos.x > initPos.x) { //¶«ÄÏ
+                else { //ä¸‹æ–¹
+                    if (mousePos.x > initPos.x) { //ä¸œå—
                         dir = this.direction.SouthEast;
                     }
-                    else { //Î÷ÄÏ
+                    else { //è¥¿å—
                         dir = this.direction.SouthWest;
                     }
                 }
@@ -116,7 +116,7 @@
                 this.setWalkStatus(this.currentDirection, 0);
             },
             walk: function(e) {
-                //Í£Ö¹µ±Ç°¶¯×÷
+                //åœæ­¢å½“å‰åŠ¨ä½œ
                 this.stopWalk();
                 var mousePos = Common.getMousePos(e);
                 this.beginWalk(mousePos);
@@ -145,21 +145,21 @@
                         var tmpY = Func(initPos.y, targetPos.y, currentCount, count);
                         obj.style.left = tmpX + "px";
                         obj.style.top = tmpY + "px";
-                        //Çå³ıĞ¡ÊıµãµÄÎó²î
+                        //æ¸…é™¤å°æ•°ç‚¹çš„è¯¯å·®
                         if (Math.abs(tmpX - targetPos.x) < 1) {
                             obj.style.left = targetPos.x + "px";
                         }
                         if (Math.abs(tmpY - targetPos.y) < 1) {
                             obj.style.top = targetPos.y + "px";
                         }
-                        //±ß½ç¿ØÖÆ
+                        //è¾¹ç•Œæ§åˆ¶
                         if (parseInt(obj.style.left) < 0) {
                             obj.style.left = 0 + "px";
                         }
                         if (parseInt(obj.style.top) < 0) {
                             obj.style.top = 0 + "px";
                         }
-                        if (parseInt(obj.style.left) + tmpWalkObj.walkerSize.w > 1024) {//³¡¾°Í¼Æ¬³ß´ç£º1024*764
+                        if (parseInt(obj.style.left) + tmpWalkObj.walkerSize.w > 1024) {//åœºæ™¯å›¾ç‰‡å°ºå¯¸ï¼š1024*764
                             tmpWalkObj.stopWalk();
                         }
                         if (parseInt(obj.style.top) + tmpWalkObj.walkerSize.h > 764) {
@@ -181,9 +181,9 @@
 
     <script type="text/javascript">
         window.onload = function() {
-            var åĞÒ£Éú = new Walker("walker2.png", { w: 70, h: 92 }, { x: 100, y: 50 });
+            var q = new Walker("walker2.png", { w: 70, h: 92 }, { x: 100, y: 50 });
             document.documentElement.onclick = function(e) {
-                åĞÒ£Éú.walk(e);
+                q.walk(e);
             }
             document.documentElement.oncontextmenu = function(e) {
                 if (document.all) {
@@ -195,13 +195,13 @@
                         e.stopPropagation();
                     }
                 }
-                åĞÒ£Éú.setDirection(e);
+                q.setDirection(e);
             }
         }        
     </script>
 
 </head>
-<body style="background-image: url(±±¾ãÂ«ÖŞs.jpg); background-repeat: no-repeat; overflow: auto;">
+<body style="background-image: url(bg.jpg); background-repeat: no-repeat; overflow: auto;">
     <!--<input type="text" id="test" />
     -->
 </body>
